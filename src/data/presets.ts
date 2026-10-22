@@ -64,6 +64,12 @@ export const defaultLetter: LetterData = {
       url: '/photos/742266665_1627420782143490_4928970210394524192_n.jpg',
       caption: 'With gratitude from the YES Family',
       rotation: -3
+    },
+    {
+      id: 'photo-8',
+      url: '/photos/551238618_1090162476611655_3896759315846613975_n.jpg',
+      caption: 'Passerelles Numériques Class of 2026',
+      rotation: 3
     }
   ]
 };
