@@ -1,0 +1,1644 @@
+/* ==========================================================================
+   VINTAGE WAX-SEALED GRATITUDE LETTER - DESIGN SYSTEM & STYLING
+   ========================================================================== */
+
+:root {
+  /* Rich Vintage Palette */
+  --bg-dark-wood: #18100b;
+  --bg-desk-radial: radial-gradient(circle at 50% 35%, #2c1a12 0%, #170d08 70%, #0d0704 100%);
+  --parchment-base: #fcf6e8;
+  --parchment-shadow: rgba(43, 29, 14, 0.45);
+  --parchment-border: #d4b58c;
+  --parchment-ink: #2b1d14;
+  --parchment-ink-soft: #4a3728;
+  --parchment-filigree: #b8860b;
+  
+  /* Envelope Kraft Paper */
+  --envelope-base: #e8d7be;
+  --envelope-shade: #d6be9f;
+  --envelope-dark: #b89f7f;
+  --envelope-shadow: rgba(0, 0, 0, 0.55);
+
+  /* Accents */
+  --gold-accent: #c59b27;
+  --gold-light: #f5df97;
+  --gold-glow: rgba(197, 155, 39, 0.4);
+  --crimson-accent: #8b1e1e;
+  
+  /* Glass UI */
+  --glass-bg: rgba(28, 18, 12, 0.75);
+  --glass-border: rgba(212, 181, 140, 0.25);
+  --glass-text: #f5e6d3;
+
+  /* Typography */
+  --font-heading: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Great Vibes', 'Alex Brush', cursive;
+  --font-display: 'Playfair Display', serif;
+  --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Base Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-dark-wood);
+  color: var(--glass-text);
+  font-family: var(--font-serif);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ==========================================================================
+   VIEWPORT & AMBIENT ATMOSPHERE
+   ========================================================================== */
+
+.vintage-desk-viewport {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-desk-radial);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  padding-bottom: 60px;
+}
+
+/* Canvas Particles */
+.ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Warm Candlelight Glow Overlay */
+.candlelight-ambient-glow {
+  position: fixed;
+  top: -15%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  background: radial-gradient(circle, rgba(255, 183, 77, 0.15) 0%, rgba(216, 67, 21, 0.05) 50%, transparent 80%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+  z-index: 2;
+  animation: candleFlicker 6s ease-in-out infinite alternate;
+}
+
+@keyframes candleFlicker {
+  0% { opacity: 0.7; transform: scale(0.98) translate(0, 0); }
+  50% { opacity: 0.95; transform: scale(1.04) translate(-10px, 10px); }
+  100% { opacity: 0.8; transform: scale(1.01) translate(5px, -5px); }
+}
+
+/* ==========================================================================
+   FLOATING CONTROLS DOCK (HEADER)
+   ========================================================================== */
+
+.controls-dock {
+  position: sticky;
+  top: 14px;
+  z-index: 100;
+  width: min(92%, 960px);
+  margin: 14px auto 20px auto;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 20px rgba(197, 155, 39, 0.12);
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.dock-left .dock-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-crest {
+  color: var(--gold-accent);
+  font-size: 1.25rem;
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+
+.dock-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--glass-text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  transition: all 0.25s var(--ease-smooth);
+  white-space: nowrap;
+}
+
+.dock-btn:hover {
+  background: rgba(197, 155, 39, 0.2);
+  border-color: var(--gold-accent);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(197, 155, 39, 0.25);
+}
+
+.dock-btn.active {
+  background: linear-gradient(135deg, rgba(197, 155, 39, 0.4), rgba(139, 30, 30, 0.4));
+  border-color: var(--gold-accent);
+  color: #fff;
+}
+
+.dock-btn.highlight-btn {
+  background: linear-gradient(135deg, #c59b27, #8b1e1e);
+  color: #fff;
+  border-color: var(--gold-light);
+  box-shadow: 0 4px 15px rgba(197, 155, 39, 0.35);
+}
+
+.dock-btn.highlight-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197, 155, 39, 0.5);
+}
+
+/* ==========================================================================
+   DESK SURFACE & STAGES
+   ========================================================================== */
+
+.desk-surface {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+}
+
+.envelope-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: fadeIn 0.8s var(--ease-smooth);
+}
+
+.stage-intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(197, 155, 39, 0.12);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+}
+
+.stage-instruction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.instruction-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #eeddc5;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.btn-open-fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #c59b27, #992525);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 16px var(--gold-glow);
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.btn-open-fallback:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(197, 155, 39, 0.45);
+}
+
+.btn-open-fallback:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   VINTAGE ENVELOPE (3D CONTAINER & STYLING)
+   ========================================================================== */
+
+.envelope-container {
+  position: relative;
+  width: min(94vw, 580px);
+  aspect-ratio: 1.55 / 1;
+  min-height: 280px;
+  margin: 10px auto;
+  perspective: 1200px;
+}
+
+.envelope-3d-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #eeddc5 0%, #d8c2a3 50%, #c4aa87 100%);
+  border-radius: 12px;
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.65),
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    inset 0 0 30px rgba(110, 80, 50, 0.2);
+  border: 1px solid rgba(139, 90, 43, 0.35);
+  overflow: visible;
+  transition: transform 0.6s var(--ease-spring);
+}
+
+.envelope-container:hover .envelope-3d-wrapper {
+  transform: translateY(-4px) rotateX(2deg);
+}
+
+/* Vintage Airmail Diagonal Edge Striping */
+.airmail-stripes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    -45deg,
+    #8b1e1e,
+    #8b1e1e 8px,
+    transparent 8px,
+    transparent 16px,
+    #1a365d 16px,
+    #1a365d 24px,
+    transparent 24px,
+    transparent 32px
+  );
+  padding: 6px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.85;
+}
+
+/* Envelope Interior & Pocket */
+.envelope-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #c7b093;
+}
+
+.envelope-pocket-interior {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 30%, #b89f81, #947b5f);
+  border-radius: 12px;
+}
+
+/* Envelope Front Side (Addressing, Stamp, Badge) */
+.envelope-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  padding: clamp(16px, 4vw, 28px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Postmark Stamp in top right */
+.envelope-stamp-area {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  pointer-events: auto;
+}
+
+/* Envelope Badge */
+.envelope-badge {
+  display: inline-flex;
+  flex-direction: column;
+  border: 1.5px solid #8b1e1e;
+  padding: 3px 8px;
+  border-radius: 3px;
+  width: fit-content;
+  opacity: 0.8;
+  transform: rotate(-3deg);
+}
+
+.badge-text {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #8b1e1e;
+}
+
+.badge-sub {
+  font-family: var(--font-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: #551414;
+}
+
+/* Recipient Address in Calligraphy */
+.envelope-address {
+  margin-top: auto;
+  margin-bottom: clamp(15px, 4vw, 30px);
+  max-width: 68%;
+}
+
+.address-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #634731;
+}
+
+.address-recipient {
+  font-family: var(--font-script);
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+  line-height: 1.1;
+  color: #3b2210;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.address-line {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(0.78rem, 2vw, 0.92rem);
+  color: #6d5038;
+  border-bottom: 1px dashed rgba(109, 80, 56, 0.4);
+  padding-bottom: 2px;
+  margin-top: 4px;
+}
+
+.envelope-crest {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: rgba(99, 71, 49, 0.6);
+}
+
+/* Top Triangular Flap */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 52%;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.flap-triangle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #ecd8bd 0%, #dbbf9d 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.flap-triangle-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: radial-gradient(circle at 50% 90%, rgba(94, 63, 34, 0.3), transparent 70%);
+}
+
+/* Opened Flap Animation */
+.envelope-open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 2;
+}
+
+/* Wax Seal Placement */
+.envelope-seal-positioner {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   WAX SEAL COMPONENT
+   ========================================================================== */
+
+.wax-seal-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.wax-seal-container:hover:not(.disabled) {
+  transform: scale(1.08);
+}
+
+.wax-seal-container:active:not(.disabled) {
+  transform: scale(0.96);
+}
+
+.wax-seal-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Ribbon tails */
+.seal-ribbon {
+  position: absolute;
+  top: 55%;
+  width: 120%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.ribbon-tail {
+  width: 20px;
+  height: 38px;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.ribbon-tail.left {
+  transform: rotate(24deg) translate(-4px, 0);
+}
+
+.ribbon-tail.right {
+  transform: rotate(-24deg) translate(4px, 0);
+}
+
+/* Seal Prompt Tooltip */
+.seal-prompt {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(18, 10, 6, 0.85);
+  border: 1px solid var(--gold-accent);
+  color: var(--gold-light);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  animation: promptPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 0.9; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(3px); }
+}
+
+/* Breaking animation state */
+.wax-seal-breaking {
+  animation: sealShatter 0.5s forwards cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes sealShatter {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1.3); }
+  30% { transform: scale(1.15) rotate(4deg); filter: brightness(1.6); }
+  100% { transform: scale(0.6) rotate(-15deg); opacity: 0; filter: blur(6px); }
+}
+
+/* ==========================================================================
+   POSTAL STAMP COMPONENT
+   ========================================================================== */
+
+.postal-stamp-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Ink Cancellation Mark */
+.cancellation-mark {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  opacity: 0.65;
+  color: #1a2a44;
+  transform: rotate(-10deg) translateY(-2px);
+  pointer-events: none;
+}
+
+.cancel-circle {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-size: 0.42rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+
+.cancel-date {
+  font-weight: 800;
+  color: #8b1e1e;
+}
+
+.cancel-wavy-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wave-line {
+  width: 32px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+/* Perforated Stamp Body */
+.perforated-stamp {
+  position: relative;
+  width: 62px;
+  height: 74px;
+  background: #fdfaf3;
+  padding: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  border: 1px solid #c9b493;
+  transform: rotate(3deg);
+  /* Perforated edge effect */
+  background-image: 
+    radial-gradient(circle at 0 0, transparent 3px, #fdfaf3 3.5px),
+    radial-gradient(circle at 100% 0, transparent 3px, #fdfaf3 3.5px),
+    radial-gradient(circle at 0 100%, transparent 3px, #fdfaf3 3.5px),
+    radial-gradient(circle at 100% 100%, transparent 3px, #fdfaf3 3.5px);
+}
+
+.stamp-inner-border {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(139, 90, 43, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px;
+  background: #f9f4ea;
+}
+
+.stamp-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: 0.45rem;
+  font-weight: 700;
+  color: #55341c;
+}
+
+.stamp-illustration {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stamp-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.stamp-footer {
+  font-family: var(--font-heading);
+  font-size: 0.42rem;
+  font-weight: 700;
+  color: #7b431e;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   UNFOLDED PARCHMENT LETTER
+   ========================================================================== */
+
+.letter-stage {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: letterSlideUp 0.85s var(--ease-spring);
+}
+
+@keyframes letterSlideUp {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.parchment-letter-wrapper {
+  position: relative;
+  width: 100%;
+  background: 
+    radial-gradient(circle at 50% 20%, #fffbf0 0%, #fbf3de 45%, #f2e3c6 85%, #e6d0ac 100%);
+  border-radius: 8px;
+  padding: clamp(24px, 5vw, 48px);
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 0 50px rgba(160, 120, 65, 0.18);
+  border: 1px solid var(--parchment-border);
+  color: var(--parchment-ink);
+  overflow: visible;
+}
+
+/* Deckled Edge & Filigree Frame */
+.parchment-border {
+  position: relative;
+  width: 100%;
+  border: 1.5px solid var(--gold-accent);
+  padding: clamp(20px, 4vw, 36px);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.parchment-border::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px dashed rgba(197, 155, 39, 0.5);
+  pointer-events: none;
+}
+
+/* Corner filigrees */
+.corner-filigree-wrapper {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  color: var(--gold-accent);
+  pointer-events: none;
+}
+
+.corner-filigree-wrapper.top-left { top: 6px; left: 6px; }
+.corner-filigree-wrapper.top-right { top: 6px; right: 6px; transform: scaleX(-1); }
+.corner-filigree-wrapper.bottom-left { bottom: 6px; left: 6px; transform: scaleY(-1); }
+.corner-filigree-wrapper.bottom-right { bottom: 6px; right: 6px; transform: scale(-1); }
+
+.corner-filigree {
+  width: 100%;
+  height: 100%;
+}
+
+/* Botanical Pressed Lavender Sprig & Paperclip */
+.botanical-sprig-container {
+  position: absolute;
+  top: -18px;
+  right: 28px;
+  width: 65px;
+  height: 110px;
+  pointer-events: none;
+  z-index: 15;
+  filter: drop-shadow(2px 5px 8px rgba(0, 0, 0, 0.35));
+}
+
+.brass-paperclip {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 14px;
+  height: 38px;
+  border: 2px solid #b8860b;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.brass-paperclip::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  right: 2px;
+  bottom: 8px;
+  border: 1.5px solid #d4af37;
+  border-radius: 4px;
+}
+
+.botanical-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(8deg);
+}
+
+/* Parchment Header */
+.parchment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(197, 155, 39, 0.3);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vintage-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--parchment-ink-soft);
+}
+
+.date-icon {
+  color: var(--gold-accent);
+  font-size: 0.85rem;
+}
+
+.postmark-header-badge {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--crimson-accent);
+  border: 1px solid rgba(139, 30, 30, 0.35);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+/* Letter Typography & Salutation */
+.parchment-body {
+  position: relative;
+  z-index: 5;
+}
+
+.letter-salutation {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 5.5vw, 3.2rem);
+  line-height: 1.2;
+  color: #2b1708;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.letter-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.letter-paragraph {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  line-height: 1.85;
+  color: #2e1d12;
+  text-align: justify;
+  text-indent: 2rem;
+  letter-spacing: 0.01em;
+}
+
+.letter-paragraph:first-of-type::first-letter {
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 6vw, 3.8rem);
+  float: left;
+  line-height: 0.85;
+  margin-right: 8px;
+  margin-top: 4px;
+  color: var(--crimson-accent);
+  text-shadow: 1px 1px 0 rgba(197, 155, 39, 0.4);
+}
+
+.typing-cursor {
+  display: inline-block;
+  font-weight: 300;
+  color: var(--crimson-accent);
+  animation: blink 0.8s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.letter-closing-section {
+  margin-top: 36px;
+  margin-bottom: 30px;
+  text-align: right;
+  padding-right: 15px;
+}
+
+.letter-closing {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+  color: var(--parchment-ink-soft);
+  margin-bottom: 6px;
+}
+
+.letter-signature {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  line-height: 1.1;
+  color: #201006;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Polaroid Memory Keepsakes Section */
+.parchment-polaroids-section {
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px dashed rgba(197, 155, 39, 0.35);
+}
+
+.polaroids-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  color: #6d4b27;
+}
+
+.polaroids-hint {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: #8c6a43;
+  text-transform: none;
+}
+
+.polaroids-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 36px);
+  padding: 10px 0;
+}
+
+.polaroid-card {
+  position: relative;
+  background: #ffffff;
+  padding: 10px 10px 16px 10px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  width: clamp(180px, 40vw, 220px);
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-smooth);
+}
+
+.polaroid-card:hover {
+  transform: translateY(-8px) scale(1.04) rotate(0deg) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+}
+
+/* Washi tape on top of polaroid */
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 18px;
+  background: rgba(220, 195, 150, 0.7);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-left: 2px dashed rgba(0, 0, 0, 0.1);
+  border-right: 2px dashed rgba(0, 0, 0, 0.1);
+}
+
+.polaroid-photo-frame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #2b1d14;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.polaroid-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s var(--ease-smooth);
+}
+
+.polaroid-card:hover .polaroid-photo-frame img {
+  transform: scale(1.06);
+}
+
+.polaroid-caption {
+  font-family: var(--font-script);
+  font-size: 1.25rem;
+  color: #3b281b;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.2;
+}
+
+/* Bottom Actions on Letter */
+.parchment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(197, 155, 39, 0.3);
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.25s var(--ease-smooth);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn.reseal-btn {
+  background: linear-gradient(135deg, #8b1e1e, #5a1111);
+  color: #fff;
+}
+
+.action-btn.customize-btn {
+  background: linear-gradient(135deg, #c59b27, #8f6b0f);
+  color: #fff;
+}
+
+.action-btn.love-btn {
+  background: linear-gradient(135deg, #d86b81, #9c4153);
+  color: #fff;
+}
+
+.action-btn.print-btn {
+  background: #2e1d12;
+  color: #fdf3d6;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   MODAL DIALOGS (EDIT & POLAROID ZOOM)
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 6, 4, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.edit-modal-content {
+  background: #23160e;
+  border: 1px solid var(--gold-accent);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: clamp(20px, 4vw, 32px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(197, 155, 39, 0.2);
+  color: #f5e6d3;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(197, 155, 39, 0.3);
+}
+
+.modal-title-group h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: var(--gold-light);
+  margin-bottom: 4px;
+}
+
+.modal-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #d1b899;
+}
+
+.modal-close-btn {
+  color: #c4aa87;
+  font-size: 1.3rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Form Controls */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section-label {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-accent);
+}
+
+.presets-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.preset-card-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(197, 155, 39, 0.25);
+  border-radius: 8px;
+  color: inherit;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.preset-card-btn:hover {
+  background: rgba(197, 155, 39, 0.15);
+  border-color: var(--gold-accent);
+  transform: translateY(-2px);
+}
+
+.preset-name {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+}
+
+.preset-desc {
+  font-family: var(--font-serif);
+  font-size: 0.76rem;
+  color: #bbb;
+  line-height: 1.25;
+}
+
+.form-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .form-grid-two {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #dfcdb8;
+}
+
+.form-group input,
+.form-group textarea,
+.paragraph-editor-item textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: #150c07;
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  border-radius: 8px;
+  color: #f7eee3;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.paragraph-editor-item textarea:focus {
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 10px rgba(197, 155, 39, 0.3);
+}
+
+.paragraphs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-paragraph-btn {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  background: rgba(197, 155, 39, 0.15);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  transition: all 0.2s;
+}
+
+.add-paragraph-btn:hover {
+  background: var(--gold-accent);
+  color: #1a0f08;
+}
+
+.paragraph-editor-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.delete-paragraph-btn {
+  padding: 8px;
+  border-radius: 6px;
+  background: rgba(211, 47, 47, 0.2);
+  border: 1px solid rgba(211, 47, 47, 0.4);
+  font-size: 0.9rem;
+}
+
+.delete-paragraph-btn:hover {
+  background: rgba(211, 47, 47, 0.4);
+}
+
+/* Wax Styling Selectors */
+.wax-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #190f09;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(197, 155, 39, 0.2);
+}
+
+.color-picker-row,
+.icon-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.picker-label {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #dfcdb8;
+  min-width: 90px;
+}
+
+.color-swatches {
+  display: flex;
+  gap: 10px;
+}
+
+.color-swatch-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s;
+}
+
+.color-swatch-btn:hover {
+  transform: scale(1.15);
+}
+
+.color-swatch-btn.active {
+  border-color: #fff;
+  outline: 2px solid var(--gold-accent);
+  transform: scale(1.15);
+}
+
+.icon-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.icon-choice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #eee;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.icon-choice-btn:hover {
+  background: rgba(197, 155, 39, 0.15);
+  border-color: var(--gold-accent);
+}
+
+.icon-choice-btn.active {
+  background: var(--gold-accent);
+  color: #1a0f08;
+  border-color: var(--gold-light);
+  font-weight: 700;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(197, 155, 39, 0.2);
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #eee;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-submit {
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #c59b27, #8b1e1e);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 14px rgba(197, 155, 39, 0.35);
+  transition: all 0.2s;
+}
+
+.btn-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(197, 155, 39, 0.5);
+}
+
+/* Polaroid Zoom Modal */
+.polaroid-modal-content {
+  background: #23160e;
+  border: 1px solid var(--gold-accent);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+}
+
+.polaroid-zoom-frame {
+  width: 100%;
+  background: #ffffff;
+  padding: 14px 14px 20px 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.polaroid-zoom-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #111;
+  overflow: hidden;
+}
+
+.polaroid-zoom-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid-zoom-caption-area {
+  margin-top: 14px;
+}
+
+.polaroid-caption-input {
+  width: 100%;
+  padding: 6px;
+  border: none;
+  border-bottom: 1.5px dashed #8b1e1e;
+  font-family: var(--font-script);
+  font-size: 1.6rem;
+  color: #2b1d14;
+  text-align: center;
+  background: transparent;
+  outline: none;
+}
+
+.polaroid-modal-tools {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-photo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  border-radius: 8px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upload-photo-btn:hover {
+  background: rgba(197, 155, 39, 0.2);
+  border-color: var(--gold-accent);
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET (AUTHENTIC VINTAGE LETTER PRINTOUT)
+   ========================================================================== */
+
+@media print {
+  body, html {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .ambient-canvas,
+  .candlelight-ambient-glow,
+  .controls-dock,
+  .stage-intro-badge,
+  .stage-instruction,
+  .envelope-stage,
+  .no-print,
+  .modal-backdrop {
+    display: none !important;
+  }
+
+  .vintage-desk-viewport {
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .desk-surface {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .letter-stage {
+    animation: none !important;
+  }
+
+  .parchment-letter-wrapper {
+    box-shadow: none !important;
+    border: 2px solid #8b1e1e !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    page-break-inside: avoid;
+    padding: 20mm !important;
+  }
+
+  .parchment-border {
+    border: 1.5px solid #8b1e1e !important;
+    background: transparent !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE REFINEMENTS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .controls-dock {
+    top: 8px;
+    width: 96%;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .brand-title {
+    display: none;
+  }
+
+  .dock-center {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .dock-btn {
+    padding: 6px 10px;
+    font-size: 0.76rem;
+  }
+
+  .btn-label {
+    display: none;
+  }
+
+  .envelope-container {
+    aspect-ratio: 1.45 / 1;
+    min-height: 250px;
+  }
+
+  .envelope-address {
+    max-width: 82%;
+  }
+
+  .parchment-letter-wrapper {
+    padding: 16px;
+  }
+
+  .parchment-border {
+    padding: 16px 12px;
+  }
+
+  .botanical-sprig-container {
+    right: 12px;
+    top: -12px;
+    transform: scale(0.8);
+  }
+
+  .polaroids-grid {
+    gap: 14px;
+  }
+
+  .polaroid-card {
+    width: 145px;
+    padding: 8px 8px 12px 8px;
+  }
+
+  .polaroid-caption {
+    font-size: 1.05rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
