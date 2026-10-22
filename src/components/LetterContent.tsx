@@ -23,15 +23,15 @@ export const LetterContent: React.FC<LetterContentProps> = ({
   useEffect(() => {
     setRevealedCharCount(0);
     let index = 0;
-    const speed = 20; // smooth, authentic calligraphy speed
-    const step = 3;   // reveal 3 characters per step for natural progression
+    const speed = 32; // relaxed, authentic fountain pen calligraphy pace
+    const step = 1;   // reveal letter-by-letter for authentic handwriting motion
 
     typingTimerRef.current = window.setInterval(() => {
       index += step;
       setRevealedCharCount(Math.min(index, fullText.length));
 
       // Play soft fountain pen nib sound rhythmically
-      if (index % 18 === 0) {
+      if (index % 14 === 0) {
         playPenNibSound();
       }
 

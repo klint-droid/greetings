@@ -1098,7 +1098,7 @@ button {
 
 .animated-fountain-pen.pen-writing {
   transform: translate(-50%, -98%) rotate(-32deg);
-  animation: penWritingSway 0.28s ease-in-out infinite alternate;
+  animation: penWritingSway 0.44s ease-in-out infinite alternate;
 }
 
 .animated-fountain-pen.pen-lifted {
