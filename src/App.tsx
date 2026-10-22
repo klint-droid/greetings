@@ -13,7 +13,6 @@ import {
   playPaperSlideSound,
   playSealStampSound,
   playChimeSound,
-  toggleAmbientMusic,
   startAmbientMusic,
   isAmbientMusicActive
 } from './utils/audio';
@@ -22,7 +21,6 @@ export const App: React.FC = () => {
   const [letterData] = useState<LetterData>(defaultLetter);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isBreaking, setIsBreaking] = useState<boolean>(false);
-  const [isMusicPlaying, setIsMusicPlaying] = useState<boolean>(false);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
   // Automatically start ambient music on first touch or click
@@ -30,7 +28,6 @@ export const App: React.FC = () => {
     const handleFirstGesture = () => {
       if (!isAmbientMusicActive()) {
         startAmbientMusic();
-        setIsMusicPlaying(true);
       }
     };
 
@@ -52,7 +49,6 @@ export const App: React.FC = () => {
     // Automatically ensure ambient music is playing on open
     if (!isAmbientMusicActive()) {
       startAmbientMusic();
-      setIsMusicPlaying(true);
     }
 
     // Golden confetti burst from center of screen
@@ -97,14 +93,6 @@ export const App: React.FC = () => {
     }, 600);
   };
 
-  // Toggle ambient music manually
-  const handleToggleMusic = () => {
-    const active = toggleAmbientMusic((playing) => {
-      setIsMusicPlaying(playing);
-    });
-    setIsMusicPlaying(active);
-  };
-
   return (
     <div className="vintage-desk-viewport">
       {/* Background canvas for falling snowflakes, warm fairy motes, and click sparkles */}
@@ -120,8 +108,6 @@ export const App: React.FC = () => {
       {/* Floating Toolbar Controls */}
       <ControlsBar
         isOpen={isOpen}
-        isMusicPlaying={isMusicPlaying}
-        onToggleMusic={handleToggleMusic}
         onReseal={handleReseal}
         onPrint={() => window.print()}
       />

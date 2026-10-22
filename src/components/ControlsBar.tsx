@@ -2,21 +2,21 @@ import React from 'react';
 
 interface ControlsBarProps {
   isOpen: boolean;
-  isMusicPlaying: boolean;
-  onToggleMusic: () => void;
   onReseal: () => void;
   onPrint: () => void;
 }
 
 export const ControlsBar: React.FC<ControlsBarProps> = ({
   isOpen,
-  isMusicPlaying,
-  onToggleMusic,
   onReseal,
   onPrint
 }) => {
   return (
-    <header className="controls-dock no-print" role="toolbar" aria-label="Greeting letter controls">
+    <header
+      className={`controls-dock no-print ${isOpen ? 'dock-has-actions' : 'dock-brand-only'}`}
+      role="toolbar"
+      aria-label="Greeting letter controls"
+    >
       <div className="dock-left">
         <div className="dock-brand">
           <span className="brand-crest">🎄</span>
@@ -24,42 +24,31 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({
         </div>
       </div>
 
-      <div className="dock-center">
-        {/* Ambient Soundtrack Toggle */}
-        <button
-          className={`dock-btn ${isMusicPlaying ? 'active' : ''}`}
-          onClick={onToggleMusic}
-          title={isMusicPlaying ? 'Mute ambient soundtrack' : 'Play ambient soundtrack'}
-          aria-label={isMusicPlaying ? 'Mute ambient soundtrack' : 'Play ambient soundtrack'}
-        >
-          <span className="btn-icon">{isMusicPlaying ? '🎵' : '🔇'}</span>
-          <span className="btn-label">{isMusicPlaying ? 'Music: On' : 'Music: Off'}</span>
-        </button>
-
-        {/* Reseal if open */}
-        {isOpen && (
+      {isOpen && (
+        <div className="dock-center">
+          {/* Reseal letter action */}
           <button
             className="dock-btn highlight-btn"
             onClick={onReseal}
             title="Fold and re-seal letter into envelope"
+            aria-label="Reseal letter"
           >
             <span className="btn-icon">✉️</span>
             <span className="btn-label">Reseal</span>
           </button>
-        )}
 
-        {/* Print / Save */}
-        {isOpen && (
+          {/* Print action (Hidden on mobile) */}
           <button
-            className="dock-btn"
+            className="dock-btn print-desktop-only"
             onClick={onPrint}
             title="Save or Print as Keepsake"
+            aria-label="Print letter"
           >
             <span className="btn-icon">🖨️</span>
             <span className="btn-label">Print</span>
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 };

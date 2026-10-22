@@ -23,14 +23,15 @@ export const LetterContent: React.FC<LetterContentProps> = ({
   useEffect(() => {
     setRevealedCharCount(0);
     let index = 0;
-    const speed = 34; // relaxed, elegant calligraphy writing pace (lower speed)
+    const speed = 20; // smooth, authentic calligraphy speed
+    const step = 3;   // reveal 3 characters per step for natural progression
 
     typingTimerRef.current = window.setInterval(() => {
-      index += 1; // 1 character at a time for authentic stroke reveal
-      setRevealedCharCount(index);
+      index += step;
+      setRevealedCharCount(Math.min(index, fullText.length));
 
-      // Play soft fountain pen nib sound on rhythm
-      if (index % 8 === 0) {
+      // Play soft fountain pen nib sound rhythmically
+      if (index % 18 === 0) {
         playPenNibSound();
       }
 
@@ -48,6 +49,16 @@ export const LetterContent: React.FC<LetterContentProps> = ({
       }
     };
   }, [fullText]);
+
+  // Fast skip if user wants to read full letter immediately
+  const handleSkipWriting = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (typingTimerRef.current !== null) {
+      clearInterval(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
+    setRevealedCharCount(fullText.length);
+  };
 
   // Corner filigree ornament SVG
   const cornerOrnament = (
@@ -140,7 +151,7 @@ export const LetterContent: React.FC<LetterContentProps> = ({
           </svg>
         </div>
 
-        {/* Clean Vintage Header: Date & Synchrony Recognition Badge */}
+        {/* Clean Vintage Header: Date, Read Skip & Synchrony Badge */}
         <div className="parchment-header">
           <div className="vintage-date">
             <span className="date-icon">❦</span>
@@ -148,8 +159,21 @@ export const LetterContent: React.FC<LetterContentProps> = ({
             <span className="date-icon">❦</span>
           </div>
 
-          <div className="postmark-header-badge">
-            <span>SYNCHRONY • RECOGNITION & GRATITUDE</span>
+          <div className="header-right-tools">
+            {!isWritingComplete && (
+              <button
+                type="button"
+                className="skip-writing-hint"
+                onClick={handleSkipWriting}
+                title="Reveal full letter immediately"
+                aria-label="Reveal entire letter text immediately"
+              >
+                ✦ Tap to read all ✦
+              </button>
+            )}
+            <div className="postmark-header-badge">
+              <span>SYNCHRONY • RECOGNITION & GRATITUDE</span>
+            </div>
           </div>
         </div>
 
@@ -240,9 +264,14 @@ export const LetterContent: React.FC<LetterContentProps> = ({
                       }
                     }}
                   >
-                    <div className="washi-tape" />
+                    <div className="polaroid-pin" aria-hidden="true" />
                     <div className="polaroid-photo-frame">
-                      <img src={photo.url} alt={photo.caption} loading="lazy" />
+                      <img
+                        src={photo.url}
+                        alt={photo.caption}
+                        className="polaroid-img"
+                        loading="lazy"
+                      />
                     </div>
                     <div className="polaroid-caption">{photo.caption}</div>
                   </div>
@@ -252,25 +281,19 @@ export const LetterContent: React.FC<LetterContentProps> = ({
           </div>
         )}
 
-        {/* Action bar at the bottom of the letter */}
-        <div className="parchment-actions no-print">
-          <button
-            className="action-btn reseal-btn"
-            onClick={onReseal}
-            title="Fold and re-seal letter into envelope"
-          >
-            <span className="btn-icon">✉️</span>
-            <span>Fold & Seal Again</span>
-          </button>
+        {/* Bottom Keepsake Footer */}
+        <div className="parchment-footer">
+          <div className="parchment-wax-stamp-mini" aria-hidden="true">
+            <span className="stamp-icon">★</span>
+            <span className="stamp-text">AUTHENTIC RECOGNITION</span>
+          </div>
 
-          <button
-            className="action-btn print-btn"
-            onClick={() => window.print()}
-            title="Print or save as high-quality PDF keepsake"
-          >
-            <span className="btn-icon">🖨️</span>
-            <span>Save Keepsake</span>
-          </button>
+          <div className="parchment-footer-actions no-print">
+            <button className="btn-reseal-bottom" onClick={onReseal}>
+              <span>✉️</span>
+              <span>Re-seal & Return to Envelope</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -65,8 +65,8 @@ export const Envelope: React.FC<EnvelopeProps> = ({
           <div className="envelope-dedication-area">
             <div className="dedication-label">Delivered with honor to:</div>
             <div className="dedication-recipient">{data.recipientName}</div>
-            <div className="dedication-sub">In recognition of your dedication, excellence & teamwork</div>
-            <div className="dedication-sender">From: {data.senderName}</div>
+            <div className="dedication-sub">A Heartfelt Thank You to the Synchrony Team</div>
+            <div className="dedication-sender">From: {data.senderName.replace('\n', ' • ')}</div>
           </div>
 
           {/* Lower Corner Accents */}
