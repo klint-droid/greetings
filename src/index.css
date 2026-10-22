@@ -1078,7 +1078,9 @@ button {
 /* Real-time Floating Fountain Pen Anchor - Touching the text directly */
 .pen-nib-anchor {
   position: relative;
-  display: inline;
+  display: inline-block;
+  width: 0;
+  height: 0;
   vertical-align: baseline;
   line-height: 0;
   pointer-events: none;
@@ -1086,36 +1088,38 @@ button {
 
 .animated-fountain-pen {
   position: absolute;
-  left: 1px;
-  bottom: 2px;
+  left: 0;
+  bottom: 0;
   width: 32px;
   height: 96px;
   pointer-events: none;
-  transform-origin: 50% 98%; /* 50% horizontal, 98% vertical aligns directly with tip */
+  transform-origin: 50% 97.8%; /* Precision gold nib tip at x=30 (50%), y=176 (97.8%) */
   z-index: 50;
-  filter: drop-shadow(2px 5px 8px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(4px 6px 10px rgba(0, 0, 0, 0.45));
 }
 
+/* Right-handed pen grip: tilted +38deg up-right towards the writer's hand */
 .animated-fountain-pen.pen-writing {
-  transform: translate(-50%, -98%) rotate(-32deg);
+  transform: translate(-50%, -97.8%) rotate(38deg);
   animation: penWritingSway 0.44s ease-in-out infinite alternate;
 }
 
+/* Natural right-hand lift away towards top-right when writing completes */
 .animated-fountain-pen.pen-lifted {
   opacity: 0;
-  transform: translate(-35%, -130%) rotate(-18deg);
+  transform: translate(25%, -140%) rotate(24deg);
   transition: all 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
 @keyframes penWritingSway {
   0% {
-    transform: translate(-50%, -98%) rotate(-33deg) scale(0.99);
+    transform: translate(-50%, -97.8%) rotate(36deg) scale(0.99);
   }
   50% {
-    transform: translate(-49%, -97%) rotate(-30deg) scale(1.01);
+    transform: translate(-49%, -96.8%) rotate(40deg) scale(1.01);
   }
   100% {
-    transform: translate(-51%, -98%) rotate(-34deg) scale(1);
+    transform: translate(-51%, -97.8%) rotate(38deg) scale(1);
   }
 }
 
