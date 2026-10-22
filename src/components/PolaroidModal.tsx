@@ -1,80 +1,140 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { PolaroidPhoto } from '../types/letter';
 
 interface PolaroidModalProps {
-  photo: PolaroidPhoto | null;
+  photos: PolaroidPhoto[];
+  initialIndex: number;
   isOpen: boolean;
   onClose: () => void;
-  onUpdatePhoto: (updated: PolaroidPhoto) => void;
 }
 
 export const PolaroidModal: React.FC<PolaroidModalProps> = ({
-  photo,
+  photos,
+  initialIndex,
   isOpen,
-  onClose,
-  onUpdatePhoto
+  onClose
 }) => {
-  if (!isOpen || !photo) return null;
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  const [caption, setCaption] = useState(photo.caption);
+  useEffect(() => {
+    setCurrentIndex(initialIndex);
+  }, [initialIndex]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          onUpdatePhoto({
-            ...photo,
-            url: reader.result,
-            caption
-          });
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+  if (!isOpen || photos.length === 0) return null;
+
+  const currentPhoto = photos[currentIndex] || photos[0];
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : photos.length - 1));
   };
 
-  const handleSaveCaption = () => {
-    onUpdatePhoto({
-      ...photo,
-      caption
-    });
-    onClose();
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < photos.length - 1 ? prev + 1 : 0));
+  };
+
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') handlePrev();
+    if (e.key === 'ArrowRight') handleNext();
+    if (e.key === 'Escape') onClose();
+  };
+
+  // Mobile Touch Swipe detection
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    // Threshold of 40px for swipe
+    if (diff > 40) {
+      handleNext();
+    } else if (diff < -40) {
+      handlePrev();
+    }
+    setTouchStartX(null);
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="polaroid-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose} aria-label="Close">
-          ✕
-        </button>
+    <div
+      className="modal-backdrop polaroid-lightbox-backdrop"
+      onClick={onClose}
+      onKeyDown={handleKeyDown}
+      role="dialog"
+      aria-modal="true"
+      tabIndex={0}
+    >
+      <div
+        className="polaroid-modal-content mobile-lightbox-content"
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Top bar with counter & close */}
+        <div className="lightbox-top-bar">
+          <span className="lightbox-counter">
+            Photo {currentIndex + 1} of {photos.length}
+          </span>
+          <button className="modal-close-btn" onClick={onClose} aria-label="Close photo viewer">
+            ✕
+          </button>
+        </div>
 
-        <div className="polaroid-zoom-frame">
-          <div className="polaroid-zoom-photo">
-            <img src={photo.url} alt={photo.caption} />
+        {/* Polaroid frame showcasing photo */}
+        <div className="polaroid-zoom-frame mobile-zoom-frame">
+          <div className="polaroid-zoom-photo mobile-zoom-photo">
+            <img
+              src={currentPhoto.url}
+              alt={currentPhoto.caption}
+              key={currentPhoto.id}
+              className="lightbox-main-img"
+            />
           </div>
 
           <div className="polaroid-zoom-caption-area">
-            <input
-              type="text"
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              className="polaroid-caption-input"
-              placeholder="Add handwritten memory note..."
-            />
+            <p className="polaroid-view-caption">{currentPhoto.caption}</p>
           </div>
         </div>
 
-        <div className="polaroid-modal-tools">
-          <label className="upload-photo-btn">
-            <span>📷 Replace Photo</span>
-            <input type="file" accept="image/*" onChange={handleFileUpload} style={{ display: 'none' }} />
-          </label>
-
-          <button className="btn-submit" onClick={handleSaveCaption}>
-            Save Memory
+        {/* Navigation arrows (Previous / Next) & indicator dots */}
+        <div className="lightbox-nav-controls">
+          <button
+            className="lightbox-nav-btn prev-btn"
+            onClick={handlePrev}
+            aria-label="Previous photo"
+            title="Previous photo"
+          >
+            ‹
           </button>
+
+          {/* Dots Indicator */}
+          <div className="lightbox-dots">
+            {photos.map((_, idx) => (
+              <button
+                key={idx}
+                className={`dot-indicator ${idx === currentIndex ? 'active' : ''}`}
+                onClick={() => setCurrentIndex(idx)}
+                aria-label={`Go to photo ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            className="lightbox-nav-btn next-btn"
+            onClick={handleNext}
+            aria-label="Next photo"
+            title="Next photo"
+          >
+            ›
+          </button>
+        </div>
+
+        <div className="lightbox-mobile-hint">
+          <span>Swipe left / right or tap arrows to view all photos</span>
         </div>
       </div>
     </div>

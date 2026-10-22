@@ -283,6 +283,21 @@ export function startAmbientMusic(): void {
       osc.start(now + idx * 0.05);
       osc.stop(now + chordDuration + 0.1);
     });
+
+    // Delicate holiday music-box celesta chime on chord transition
+    const chimeFreqs = [880.00, 1046.50, 1318.51, 1174.66]; // A5, C6, E6, D6
+    const chimeFreq = chimeFreqs[chordIndex % chimeFreqs.length];
+    const bellOsc = ctx.createOscillator();
+    const bellGain = ctx.createGain();
+    bellOsc.type = 'sine';
+    bellOsc.frequency.setValueAtTime(chimeFreq, now + 0.25);
+    bellGain.gain.setValueAtTime(0.001, now + 0.25);
+    bellGain.gain.linearRampToValueAtTime(0.03, now + 0.3);
+    bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+    bellOsc.connect(bellGain);
+    bellGain.connect(ctx.destination);
+    bellOsc.start(now + 0.25);
+    bellOsc.stop(now + 2.5);
   }
 
   // Play immediately

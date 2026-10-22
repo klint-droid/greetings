@@ -1,106 +1,61 @@
 import type { LetterData } from '../types/letter';
 
 export const defaultLetter: LetterData = {
-  recipientName: 'My Dear Friend',
-  senderName: 'Yours Always',
+  recipientName: 'The Extraordinary Employees of Synchrony',
+  senderName: 'With Warmest Gratitude & Pride',
   date: new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date()),
-  salutation: 'Dearest Friend,',
+  salutation: 'To Our Dedicated Synchrony Team,',
   paragraphs: [
-    'I took a quiet moment today to pause and reflect, and my thoughts naturally wandered to you. In a world that often rushes by without a second glance, your presence has been a steady, gentle light that I am endlessly grateful for.',
-    'Thank you for your warmth, for listening when words were hard to find, and for sharing laughter that turns ordinary days into treasured memories. You give without asking, care without conditions, and bring an honesty that makes everything feel safe and true.',
-    'Please remember how deeply valued and appreciated you are. Having you in my life is a gift I do not take for granted, and I wanted this small letter to remind you of just how much you mean to me.'
+    'As we pause to reflect on our journey and the milestones we celebrate together, one truth shines brightest: the true strength, soul, and spirit of Synchrony lives within each of you. Your dedication, creativity, and tireless commitment turn challenges into breakthroughs and every vision into shared success.',
+    'Thank you for showing up every day with empathy, integrity, and passion. Whether collaborating across teams, innovating for the future, or going the extra mile for our customers and communities, your impact is felt far and wide. You lift one another up and make excellence look effortless.',
+    'Please know that your hard work, resilience, and unique contributions are deeply seen and profoundly appreciated. Thank you for your devotion, your optimism, and for being the heart of everything we achieve at Synchrony. We are truly honored and proud to work alongside you.'
   ],
-  closing: 'With deepest gratitude and fondest thoughts,',
-  sealColor: 'crimson',
-  sealIcon: 'heart',
-  stampStyle: 'vintage-paris',
+  closing: 'With immense pride, heartfelt appreciation, and deepest gratitude,',
+  sealColor: 'gold',
+  sealIcon: 'star',
+  stampStyle: 'airmail-gold',
   polaroids: [
     {
       id: 'photo-1',
-      url: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=600&q=80',
-      caption: 'Warm sunshine & quiet gratitude',
+      url: '/photos/640310196_1206696914958210_2468885474677831162_n.jpg',
+      caption: 'Celebrating our team spirit',
       rotation: -3
     },
     {
       id: 'photo-2',
-      url: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=80',
-      caption: 'For every shared smile',
+      url: '/photos/665935849_1242640061363895_4963051223610160994_n.jpg',
+      caption: 'Moments of joy & connection',
+      rotation: 3
+    },
+    {
+      id: 'photo-3',
+      url: '/photos/712469525_1286585833635984_2922290261154538671_n.jpg',
+      caption: 'Together, making a difference',
+      rotation: -2
+    },
+    {
+      id: 'photo-4',
+      url: '/photos/713585909_1286585896969311_4903932948296942915_n.jpg',
+      caption: 'Excellence in all we do',
       rotation: 4
+    },
+    {
+      id: 'photo-5',
+      url: '/photos/738625467_1717519369391383_5783676482624685919_n.jpg',
+      caption: 'Proud to share this journey',
+      rotation: -4
+    },
+    {
+      id: 'photo-6',
+      url: '/photos/739609754_1012583914887155_5955440938017351912_n.jpg',
+      caption: 'Smiles that inspire us daily',
+      rotation: 2
+    },
+    {
+      id: 'photo-7',
+      url: '/photos/742266665_1627420782143490_4928970210394524192_n.jpg',
+      caption: 'Our remarkable Synchrony family',
+      rotation: -3
     }
   ]
 };
-
-export interface PresetTemplate {
-  id: string;
-  title: string;
-  description: string;
-  recipientDefault: string;
-  salutationDefault: string;
-  paragraphs: string[];
-  closingDefault: string;
-  sealColor: LetterData['sealColor'];
-  sealIcon: LetterData['sealIcon'];
-}
-
-export const gratitudePresets: PresetTemplate[] = [
-  {
-    id: 'friend-anchor',
-    title: 'An Anchor in the Storm',
-    description: 'For a dear friend who always stands by you through everything.',
-    recipientDefault: 'My Dearest Friend',
-    salutationDefault: 'To My Steadfast Friend,',
-    paragraphs: [
-      'There are moments when we realize how rare it is to find someone whose loyalty, kindness, and understanding never falter. You have been that constant presence for me, through stormy seasons and sunny horizons alike.',
-      'Thank you for always picking up the call, for believing in me even when self-doubt lingered, and for turning every quiet challenge into something manageable with your humor and grace.',
-      'I am endlessly thankful for our shared chapters and look forward to the many unwritten pages ahead. Thank you for simply being you.'
-    ],
-    closingDefault: 'Forever your friend,',
-    sealColor: 'crimson',
-    sealIcon: 'heart'
-  },
-  {
-    id: 'mentor-guidance',
-    title: 'A Guiding Light & Mentor',
-    description: 'For a mentor, teacher, or guide who inspired and believed in you.',
-    recipientDefault: 'Respected Mentor',
-    salutationDefault: 'Dear Mentor & Guide,',
-    paragraphs: [
-      'Few things in life are as transformative as having someone who sees your potential before you even recognize it in yourself. Your wisdom, patience, and unwavering guidance have shaped my journey in ways words can scarcely capture.',
-      'Thank you for generously sharing your time, for challenging me to grow beyond my comfort zone, and for leading not just by instruction, but by noble example.',
-      'I carry the lessons you have imparted with immense gratitude and pride, and I hope to one day pass forward the same light you have so graciously shared with me.'
-    ],
-    closingDefault: 'With boundless respect and appreciation,',
-    sealColor: 'gold',
-    sealIcon: 'branch'
-  },
-  {
-    id: 'unconditional-warmth',
-    title: 'Unconditional Warmth',
-    description: 'For a partner, family member, or soulmate who fills your days with love.',
-    recipientDefault: 'My Beloved',
-    salutationDefault: 'My Dearest Heart,',
-    paragraphs: [
-      'If I could gather every quiet smile, every comforting embrace, and every unspoken understanding we have shared, it would still not measure up to the depth of my gratitude for having you in my life.',
-      'You make the heavy days lighter, the quiet days full of wonder, and the world feel like home wherever you are. Thank you for loving me so gently and faithfully.',
-      'May this letter serve as a keepsake of my enduring devotion and a reminder that you are cherished beyond all measure.'
-    ],
-    closingDefault: 'With all my heart and soul,',
-    sealColor: 'rose',
-    sealIcon: 'rose'
-  },
-  {
-    id: 'simple-kindness',
-    title: 'A Note of Gentle Thanks',
-    description: 'A genuine, lovely thank-you for someone who extended unexpected kindness.',
-    recipientDefault: 'Kind Soul',
-    salutationDefault: 'Dear Friend,',
-    paragraphs: [
-      'I wanted to write you this small note to express my heartfelt appreciation for your thoughtful gesture and generous spirit.',
-      'Your kindness touched me in a way you may not even realize. In a busy world, people like you make everyday life softer, kinder, and full of optimism.',
-      'Thank you for bringing your warmth into my path. I hope the universe returns to you every bit of good energy you give so freely to others.'
-    ],
-    closingDefault: 'Warmly and with sincere thanks,',
-    sealColor: 'emerald',
-    sealIcon: 'quill'
-  }
-];

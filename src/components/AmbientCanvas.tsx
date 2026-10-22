@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 
-interface Particle {
+interface Snowflake {
+  x: number;
+  y: number;
+  radius: number;
+  speedY: number;
+  swayAngle: number;
+  swaySpeed: number;
+  swayRadius: number;
+  alpha: number;
+  isCrystal: boolean;
+}
+
+interface GoldenMote {
   x: number;
   y: number;
   size: number;
@@ -46,45 +58,63 @@ export const AmbientCanvas: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // Initial background dust particles
-    const particleCount = Math.min(55, Math.floor((width * height) / 22000));
-    const particles: Particle[] = [];
-    const colors = ['#f5d796', '#eed080', '#e2b866', '#ffffff', '#ffdfa0'];
+    // 1. Magical Christmas Snowflakes
+    const snowCount = Math.min(65, Math.floor((width * height) / 18000));
+    const snowflakes: Snowflake[] = [];
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
+    for (let i = 0; i < snowCount; i++) {
+      snowflakes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        size: Math.random() * 2.2 + 0.8,
-        speedX: (Math.random() - 0.5) * 0.35,
-        speedY: -Math.random() * 0.4 - 0.15, // gently drift upward
-        alpha: Math.random() * 0.5 + 0.1,
-        maxAlpha: Math.random() * 0.4 + 0.3,
-        pulseSpeed: Math.random() * 0.02 + 0.008,
-        color: colors[Math.floor(Math.random() * colors.length)]
+        radius: Math.random() * 2.8 + 1.2,
+        speedY: Math.random() * 0.75 + 0.35,
+        swayAngle: Math.random() * Math.PI * 2,
+        swaySpeed: Math.random() * 0.02 + 0.008,
+        swayRadius: Math.random() * 1.2 + 0.4,
+        alpha: Math.random() * 0.65 + 0.25,
+        isCrystal: Math.random() > 0.78
       });
     }
 
-    // Spawn sparkles on pointer down
+    // 2. Warm Golden Hearth & Holiday Fairy Dust
+    const moteCount = Math.min(30, Math.floor((width * height) / 35000));
+    const goldenMotes: GoldenMote[] = [];
+    const warmColors = ['#ffd700', '#ffe082', '#ffcc80', '#fff8e1', '#e0f2fe'];
+
+    for (let i = 0; i < moteCount; i++) {
+      goldenMotes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 2.4 + 1.0,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: -Math.random() * 0.35 - 0.1,
+        alpha: Math.random() * 0.5 + 0.1,
+        maxAlpha: Math.random() * 0.5 + 0.3,
+        pulseSpeed: Math.random() * 0.02 + 0.008,
+        color: warmColors[Math.floor(Math.random() * warmColors.length)]
+      });
+    }
+
+    // Spawn festive sparkles on pointer down
     const handlePointerDown = (e: MouseEvent | TouchEvent) => {
       const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
       const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
 
-      const sparkleColors = ['#ffd700', '#ffb74d', '#ff8a80', '#fff3e0', '#f48fb1'];
-      for (let i = 0; i < 14; i++) {
+      const festiveColors = ['#ffd700', '#ff4d6d', '#52b788', '#ffffff', '#ffb703', '#e0f2fe'];
+      for (let i = 0; i < 16; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 3.5 + 1.2;
+        const speed = Math.random() * 3.8 + 1.4;
         sparklesRef.current.push({
           x: clientX,
           y: clientY,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - 1.2,
-          size: Math.random() * 3.5 + 1.5,
+          size: Math.random() * 3.6 + 1.6,
           alpha: 1,
-          decay: Math.random() * 0.025 + 0.015,
-          color: sparkleColors[Math.floor(Math.random() * sparkleColors.length)],
+          decay: Math.random() * 0.025 + 0.016,
+          color: festiveColors[Math.floor(Math.random() * festiveColors.length)],
           rotation: Math.random() * Math.PI,
-          vRot: (Math.random() - 0.5) * 0.2
+          vRot: (Math.random() - 0.5) * 0.22
         });
       }
     };
@@ -92,45 +122,101 @@ export const AmbientCanvas: React.FC = () => {
     window.addEventListener('mousedown', handlePointerDown);
     window.addEventListener('touchstart', handlePointerDown, { passive: true });
 
+    // Helper: draw 6-point snowflake crystal
+    const drawCrystal = (cx: number, cy: number, r: number, alpha: number) => {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#ffffff';
+
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(-r, 0);
+        ctx.lineTo(r, 0);
+        ctx.stroke();
+
+        // Little branch tips
+        ctx.beginPath();
+        ctx.moveTo(r * 0.6, -r * 0.35);
+        ctx.lineTo(r * 0.6, r * 0.35);
+        ctx.stroke();
+
+        ctx.rotate(Math.PI / 3);
+      }
+      ctx.restore();
+    };
+
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render drifting dust particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.alpha += p.pulseSpeed;
+      // A. Render Gentle Falling Snowflakes
+      for (let i = 0; i < snowflakes.length; i++) {
+        const flake = snowflakes[i];
+        flake.swayAngle += flake.swaySpeed;
+        flake.x += Math.sin(flake.swayAngle) * flake.swayRadius;
+        flake.y += flake.speedY;
 
-        if (p.alpha > p.maxAlpha || p.alpha < 0.05) {
-          p.pulseSpeed = -p.pulseSpeed;
+        if (flake.y > height + 15) {
+          flake.y = -15;
+          flake.x = Math.random() * width;
+        }
+        if (flake.x < -15) flake.x = width + 15;
+        if (flake.x > width + 15) flake.x = -15;
+
+        if (flake.isCrystal && flake.radius > 2.2) {
+          drawCrystal(flake.x, flake.y, flake.radius * 2.2, flake.alpha * 0.7);
+        } else {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.globalAlpha = flake.alpha;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.85)';
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      // B. Render Warm Golden Floating Fairy Motes
+      for (let i = 0; i < goldenMotes.length; i++) {
+        const m = goldenMotes[i];
+        m.x += m.speedX;
+        m.y += m.speedY;
+        m.alpha += m.pulseSpeed;
+
+        if (m.alpha > m.maxAlpha || m.alpha < 0.05) {
+          m.pulseSpeed = -m.pulseSpeed;
         }
 
-        if (p.y < -10) {
-          p.y = height + 10;
-          p.x = Math.random() * width;
+        if (m.y < -15) {
+          m.y = height + 15;
+          m.x = Math.random() * width;
         }
-        if (p.x < -10) p.x = width + 10;
-        if (p.x > width + 10) p.x = -10;
+        if (m.x < -15) m.x = width + 15;
+        if (m.x > width + 15) m.x = -15;
 
         ctx.save();
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
+        ctx.arc(m.x, m.y, m.size, 0, Math.PI * 2);
+        ctx.fillStyle = m.color;
+        ctx.globalAlpha = Math.max(0, Math.min(1, m.alpha));
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = m.color;
         ctx.fill();
         ctx.restore();
       }
 
-      // Render interactive sparkles
+      // C. Render Interactive Holiday Sparkles
       const sparkles = sparklesRef.current;
       for (let i = sparkles.length - 1; i >= 0; i--) {
         const s = sparkles[i];
         s.x += s.vx;
         s.y += s.vy;
-        s.vy += 0.06; // gravity
+        s.vy += 0.07; // gentle gravity
         s.vx *= 0.98;
         s.alpha -= s.decay;
         s.rotation += s.vRot;
@@ -145,7 +231,7 @@ export const AmbientCanvas: React.FC = () => {
         ctx.rotate(s.rotation);
         ctx.globalAlpha = Math.max(0, s.alpha);
         ctx.fillStyle = s.color;
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 8;
         ctx.shadowColor = s.color;
 
         // Draw 4-point star sparkle

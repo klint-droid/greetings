@@ -8,7 +8,6 @@ interface WaxSealProps {
   onClick?: () => void;
   disabled?: boolean;
   size?: number;
-  showPrompt?: boolean;
 }
 
 export const WaxSeal: React.FC<WaxSealProps> = ({
@@ -17,8 +16,7 @@ export const WaxSeal: React.FC<WaxSealProps> = ({
   isBreaking = false,
   onClick,
   disabled = false,
-  size = 90,
-  showPrompt = true
+  size = 90
 }) => {
   // Color configuration presets
   const colorConfigs: Record<
@@ -130,12 +128,6 @@ export const WaxSeal: React.FC<WaxSealProps> = ({
         }
       }}
     >
-      {/* Ribbon underneath seal */}
-      <div className="seal-ribbon">
-        <div className="ribbon-tail left" style={{ backgroundColor: currentTheme.shadow }} />
-        <div className="ribbon-tail right" style={{ backgroundColor: currentTheme.shadow }} />
-      </div>
-
       <svg
         viewBox="0 0 100 100"
         className="wax-seal-svg"
@@ -239,12 +231,6 @@ export const WaxSeal: React.FC<WaxSealProps> = ({
         </g>
       </svg>
 
-      {/* Floating prompt tooltip */}
-      {showPrompt && !disabled && (
-        <div className="seal-prompt">
-          <span>Click to break seal</span>
-        </div>
-      )}
     </div>
   );
 };
